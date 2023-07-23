@@ -1,40 +1,28 @@
 const { ethers } = require("hardhat");
 
-const localChainId = "31337";
-
-// const sleep = (ms) =>
-//   new Promise((r) =>
-//     setTimeout(() => {
-//       console.log(`waited for ${(ms / 1000).toFixed(3)} seconds`);
-//       r();
-//     }, ms)
-//   );
-
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
-  const chainId = await getChainId();
 
   // Deploy Bridge contract
   const bridgeDeployment = await deploy("Bridge", {
     from: deployer,
     log: true,
-    waitConfirmations: 2,
+    waitReceipt: true,
   });
 
-  // Wait for the deployment of Bridge to be confirmed
-  await bridgeDeployment.wait();
+  console.log(`Bridge contract deployed at address: ${bridgeDeployment.address}`);
 
   // Deploy BridgeToken contract after Bridge is deployed
   const bridgeTokenDeployment = await deploy("BridgeToken", {
     from: deployer,
     log: true,
-    waitConfirmations: 2,
-    args: [bridgeDeployment.address], // Pass the address of the deployed Bridge contract as an argument
+    waitReceipt: true,
+    //args: [bridgeDeployment.address], // Pass the address of the deployed Bridge contract as an argument
   });
 
-  // Wait for the deployment of BridgeToken to be confirmed
-  await bridgeTokenDeployment.wait();
+  console.log(`BridgeToken contract deployed at address: ${bridgeTokenDeployment.address}`);
 };
 
 module.exports.tags = ["Bridge"];
+module.exports.tags = ["BridgeToken"];
