@@ -2,7 +2,7 @@
 pragma solidity 0.7.6;
 
 import "./extension/Admin.sol";
-import "./interface/IBrigeToken.sol";
+import "./interface/IBridgeToken.sol";
 
 contract Bridge is Admin {
 
