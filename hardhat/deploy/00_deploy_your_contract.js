@@ -15,16 +15,26 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  //
-  const marketplace = "0x300616A3C499Ff1A540f02dF784472fFf672FbC3"; // telos testnet
-
-  // Deploy
-  await deploy("CalendarOne", {
+  // Deploy Bridge contract
+  const bridgeDeployment = await deploy("Bridge", {
     from: deployer,
-    //args: [marketplace],
     log: true,
     waitConfirmations: 2,
   });
 
+  // Wait for the deployment of Bridge to be confirmed
+  await bridgeDeployment.wait();
+
+  // Deploy BridgeToken contract after Bridge is deployed
+  const bridgeTokenDeployment = await deploy("BridgeToken", {
+    from: deployer,
+    log: true,
+    waitConfirmations: 2,
+    args: [bridgeDeployment.address], // Pass the address of the deployed Bridge contract as an argument
+  });
+
+  // Wait for the deployment of BridgeToken to be confirmed
+  await bridgeTokenDeployment.wait();
 };
-module.exports.tags = ["CalendarOne"];
+
+module.exports.tags = ["Bridge"];
