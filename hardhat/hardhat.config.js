@@ -41,6 +41,13 @@ module.exports = {
         chainId: 40,
         accounts: { mnemonic: mnemonic() },
       },
+      fuji: {
+      url: "https://api.avax.network/ext/bc/C/rpc",
+      chainId: 43114,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
  
   
   },
@@ -75,6 +82,15 @@ module.exports = {
       },
       {
         version: "0.8.13",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+        {
+        version: "0.7.6",
         settings: {
           optimizer: {
             enabled: true,
