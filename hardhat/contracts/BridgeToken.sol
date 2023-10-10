@@ -6,8 +6,8 @@ import "./extension/Admin.sol";
 contract BridgeToken is Admin {
 
     constructor() public {
-        _name = "Daily Telos Bridge Token";
-        _symbol = "DTB";
+        _name = "BUNY ERC20 Bridge Token";
+        _symbol = "BUNY";
         _decimals = 18;
         _owner = msg.sender;
         admin[msg.sender] = true;        
